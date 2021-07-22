@@ -1,0 +1,20 @@
+.mapa {
+  border-radius: 5%;
+}
+
+.map-container {
+  height: 90%;
+}
+
+.sidebar {
+  background-color: rgba(35, 55, 75, 0.9);
+  color: #ffffff;
+  padding: 2px 6px;
+  font-family: monospace;
+  /* z-index: 1; */
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  margin: 2px;
+  border-radius: 4px;
+}
