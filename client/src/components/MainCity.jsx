@@ -10,7 +10,7 @@ export default function MainCity() {
   const ipApiKey = process.env.REACT_APP_IP_API_KEY;
 
   const dispatch = useDispatch();
-  const clientCity = useSelector(store=>store.clientCity);
+  const actualWeather = useSelector(store=>store.actualWeather);
   const searchedCity = useSelector(store=>store.searchedCity);
   const weather = useSelector(store=>store.weather);
   const news = useSelector(store=>store.news);
@@ -19,14 +19,14 @@ export default function MainCity() {
   if (searchedCity) {
     city = searchedCity;
   } else {
-    city = clientCity;
+    city = actualWeather;
   }
 
   useEffect(() => {
     console.log("ejecuta timeOut");
     setTimeout(() => {
       console.log(city.name);
-      dispatch(getNews(city.name));
+      getNews(city.name);
     }, 3000);
   }, [city]);
 
@@ -36,8 +36,8 @@ export default function MainCity() {
   let notice1 = [];
   let notice2 = [];
   if (news) {
-    notice1 = news.map((noticia) => noticia.split("/url?q=")[1]);
-    notice2 = notice1.map((noticia) => noticia.split("&sa")[0]);
+    notice1 = news?.map((noticia) => noticia?.split("/url?q=")[1]);
+    notice2 = notice1?.map((noticia) => noticia?.split("&sa")[0]);
     console.log(notice2);
   }
 
@@ -47,19 +47,7 @@ export default function MainCity() {
         {!city || city===undefined ? (
           <div></div>
         ) : (
-          <MainCard
-            key={city.id}
-            act={Math.round(city.temp, 0)}
-            wind_speed={city.wind_speed}
-            wind_direction={city.wind_direction}
-            sunrise={city.sunrise}
-            sunset={city.sunset}
-            max={Math.round(city.max, 0)}
-            min={Math.round(city.min, 0)}
-            name={city.name}
-            img={city.img}
-            // onClose={() => onClose(city.id)}
-          />
+          <MainCard/>
         )}
       </div>
       <div className="mainCityNews">
@@ -71,9 +59,9 @@ export default function MainCity() {
             </a>
           ))}
       </div>
-      <div className="mainCityMap">
+      {/* <div className="mainCityMap">
         <MapView latitude={latitude} longitude={longitude} />
-      </div>
+      </div> */}
     </div>
   );
 }

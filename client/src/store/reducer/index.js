@@ -1,27 +1,26 @@
 const initialState = {
   city:"",
-  clientCity: "",
-  searchedCity: "",
-  weather: "",
+  actualWeather: "",
+  forecastWeather: "",
   news: ""
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_NEWS":
-      return {
-        ...state,
-        news: action.payload,
-      };
     case "SET_CITY":
       return {
         ...state,
         city: action.payload,
       };
-    case "SET_CLIENT_CITY":
+    case "SET_ACTUAL_WEATHER":
       return {
         ...state,
-        clientCity: action.payload,
+        actualWeather: action.payload,
+      };
+    case "SET_NEWS":
+      return {
+        ...state,
+        news: action.payload,
       };
     default:
       return {

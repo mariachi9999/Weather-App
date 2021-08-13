@@ -2,7 +2,7 @@ import React from "react";
 import "./Card.css";
 import "./MainCard.css";
 
-export default function MainCard(props) {
+export default function MainCard() {
   const {
     act,
     wind_speed,
@@ -14,7 +14,7 @@ export default function MainCard(props) {
     name,
     img,
     onClose,
-  } = props;
+  } = "rigged";
 
   function getCardinalDirection(angle) {
     const directions = [

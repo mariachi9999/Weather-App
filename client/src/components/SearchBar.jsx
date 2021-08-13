@@ -1,20 +1,27 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./SearchBar.css";
+import { onSearch } from "../store/actions/index";
 
-export default function SearchBar(props) {
+
+export default function SearchBar() {
   const [city, setCity] = useState("");
+  const dispatch = useDispatch();
+
 
   const handleChange = (e)=>{
     setCity(e.target.value)
   }
 
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    dispatch(onSearch(city))
+    setCity("")
+  }
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.onSearch(city);
-        setCity("");
-      }}
+      onSubmit={handleSubmit}
       className="search"
     >
       <input

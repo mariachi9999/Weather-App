@@ -36,7 +36,7 @@ async function scrapper(city) {
   return await init(url);
 }
 
-app.get("/", async (req, res) => {
+app.get("/news/", async (req, res) => {
   let city = req.query.city;
   try {
     const news = await scrapper(city);

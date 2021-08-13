@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
 import './App.css';
 import Nav from '../components/Nav.jsx';
-import Cards from '../components/Cards.jsx';
 import MainCity from '../components/MainCity';
 import Footer from '../components/Footer';
-import { getIpClient, onLoad } from "../store/actions/index";
+import { getIpClient, getActualWeather, getNews } from "../store/actions/index";
 
 
 
@@ -23,20 +22,18 @@ function App() {
   //to ask for the weather, I used openweathermap.
   const dispatch = useDispatch();
   const city = useSelector(store=>store.city);
-  const clientCity = useSelector(store=>store.clientCity);
+  const actualWeather = useSelector(store=>store.actualWeather);
   const searchedCity = useSelector(store=>store.searchedCity);
   const weather = useSelector(store=>store.weather);
   const news = useSelector(store=>store.news);
 
-  let cityToRender = null;
-  if (searchedCity) {
-    cityToRender = searchedCity;
-  } else {
-    cityToRender = clientCity;
-  }
+  useEffect(()=> 
+  dispatch(getIpClient()),
+  [])
 
-  useEffect(()=>dispatch(getIpClient()),[])
-  useEffect(()=>dispatch(onLoad(city)),[city])
+  useEffect(()=>dispatch(getActualWeather(city)),[city])
+
+  useEffect(()=>dispatch(getNews(city)),[city])
 
 
   return (
@@ -45,15 +42,7 @@ function App() {
         <Nav/>
       </div>
       <div className="AppCity">
-        {!cityToRender?
-          <div></div>
-          :
           <MainCity/>
-        }
-
-      </div>
-      <div className="AppFavs">
-        <Cards/>
       </div>
       <div className="AppFooter">
         <Footer/>
