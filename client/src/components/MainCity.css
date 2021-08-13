@@ -8,15 +8,24 @@
 
 .mainCityCard {
 display: flex;
-width: 50%;
+width: 33%;
 height: 100%;
 justify-content: center;
 flex-direction: row;
 }
 
+.mainCityNews {
+  display: flex;
+  width: 34%;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  background-color: blueviolet;
+  }
+
 .mainCityMap {
     display: flex;
-    width: 50%;
+    width: 33%;
     height: 100%;
     justify-content: center;
     flex-direction: row;

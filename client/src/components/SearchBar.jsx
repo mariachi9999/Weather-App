@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar(props) {
   const [city, setCity] = useState("");
+
+  const handleChange = (e)=>{
+    setCity(e.target.value)
+  }
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSearch(city);
+        props.onSearch(city);
         setCity("");
       }}
       className="search"
@@ -16,7 +21,7 @@ export default function SearchBar({ onSearch }) {
         type="text"
         placeholder="Ciudad..."
         value={city}
-        onChange={(e) => setCity(e.target.value)}
+        onChange={(e) => handleChange(e)}
         className="inputSearch"
       />
       <input type="submit" value="Agregar" />
