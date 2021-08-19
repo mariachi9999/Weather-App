@@ -1,6 +1,9 @@
 import axios from "axios";
 const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const ipApiKey = process.env.REACT_APP_IP_API_KEY
+const positionStackApi =`2e0e65bf6db5ded7acc89588dcc601a0`
+
+
 
 export function getIpClient() {
   return async function (dispatch){
@@ -15,7 +18,7 @@ export function getIpClient() {
         .then(r => {
           dispatch({
             type: "SET_CITY",
-            payload: r.city,
+            payload: r,
           });
         })
   }
@@ -24,7 +27,7 @@ export function getIpClient() {
 export function getActualWeather(ciudad) {
   return async function(dispatch){
     //Llamado a la API del clima
-    const search = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=299dc9f40d589d6bcc32f61eb4e30885`;
+    const search = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=131a263c9a573a3769b911f2e58edc8f`;
     fetch(search)
       .then((r) => r.json())
       .then((recurso) => {
@@ -80,22 +83,30 @@ export const getNews = (city) => {
 };
 
 export function onSearch(city) {
+  let search = `http://api.positionstack.com/v1/forward?access_key=${positionStackApi}&query=${city}`
+
   return async function (dispatch){
-    dispatch({
-      type: "SET_CITY",
-      payload: city,
-    });
+    fetch(search)
+    .then(r=>r.json())
+    .then(recurso=>{
+      dispatch({
+        type: "SET_SEARCH_CITY",
+        payload: recurso.data[0],
+      });
+    })
   }
 }
 
-export async function getForecast(city) {
-    let forecast = undefined
-    let url = `api.openweathermap.org/data/2.5/forecast/daily?q=${city}&units=metric&cnt=7&appid=${ipApiKey}`
-    try {
-      forecast = await (await fetch(url)).json()
-    } catch (error) {
-      console.error(error);
-    }
-    console.log(url)
-    return forecast
-}
+export function getForecast(lat,lon) {
+  let search = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,hourly&appid=131a263c9a573a3769b911f2e58edc8f`
+  return async function(dispatch){
+    fetch(search)
+      .then((r) => r.json())
+      .then((recurso) => {
+          dispatch({
+            type: "SET_FORECAST",
+            payload: recurso,
+          });
+        } 
+      );
+}}

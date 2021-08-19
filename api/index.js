@@ -9,6 +9,8 @@ app.use(cors());
 
 async function init(url) {
   
+  console.log(url)
+
   let enlaces = []
   try {
     let enlaces = [];
@@ -18,9 +20,16 @@ async function init(url) {
     $("div.kCrYT").each((i, e) => {
       const link = $(e)
       .find("a")
-      .attr("href")      
-      enlaces.push(link)
+      .attr("href")
+      const title = $(e)
+      .text()
+      enlaces.push({link: link, title: title})
     });
+
+    // $("div.JheGif").each((i, e) => {
+    //   const title = $(e)
+    //   enlaces[i].title = title
+    // });
 
     return enlaces
 
@@ -32,7 +41,6 @@ async function init(url) {
 async function scrapper(city) {
   let search = city.replace(/ /g, "+");
   let url = `https://www.google.com/search?q=noticias+${search}+hoy&source=lnms&tbm=nws`;
-  console.log(url)
   return await init(url);
 }
 
@@ -40,7 +48,6 @@ app.get("/news/", async (req, res) => {
   let city = req.query.city;
   try {
     const news = await scrapper(city);
-    console.log(news);
     // .then((response) => {
     //   console.log(response);
     //   JSON.stringify(response);
